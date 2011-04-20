@@ -10,4 +10,11 @@ int main() {
     insere_elemento(palavra, "tchau");
     insere_elemento(palavra, "feliz natal");
     imprime_lista(palavra);
+	printf("-----\n");
+	remove_elemento(&palavra, "oi");
+	imprime_lista(palavra);
+	printf("-----\n");
+	remove_elemento(&palavra, "tchau");
+	imprime_lista(palavra);
+	printf("-----\n");
 }
