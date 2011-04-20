@@ -1,3 +1,5 @@
+all: main
+
 arquivos: clean_arquivos
 	gcc arquivos.c -o arquivos
 
@@ -16,4 +18,4 @@ clean_lista_encadeada:
 clean_main:
 	@rm -rf main
 
-all: main
+clean: clean_arquivos clean_lista_encadeada clean_main
