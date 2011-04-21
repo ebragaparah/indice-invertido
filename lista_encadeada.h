@@ -34,7 +34,10 @@ void insere_elemento(tipo_palavra * raiz, char * palavra) {
 }
 
 void imprime_lista(tipo_palavra * lista) {
-
+    if(lista == NULL){
+        printf("Lista vazia!\n");
+        return;
+    }
     for (; lista != NULL; lista = lista->prox) {
         printf("%s\r\n", lista->texto);
     }
@@ -42,18 +45,40 @@ void imprime_lista(tipo_palavra * lista) {
 
 int remove_elemento(tipo_palavra ** lista, char * texto){
 	tipo_palavra * lixo;
-	if((*lista)->texto == texto){
+
+//  removendo o primeiro elemento da lista
+	if( (*lista)->texto == texto){
 		lixo = (*lista);
 		*lista = (*lista)->prox;
 		free(lixo);
 		return 1;
 	}
-	else{
-		while((*lista)->prox->texto != texto)
-			*lista = (*lista)->prox;
-		lixo = (*lista)->prox;
-		(*lista)->prox = (*lista)->prox->prox;
-		free(lixo);
-		return 1;
-	}
+
+// tentando remover um elemento que nao existe na lista quando a lista só contém 1 elemento
+
+    if( (*lista)->prox == NULL )
+        return 0;
+
+//  percorre a lista até que o próximo contenha o texto procurado
+	while( (*lista)->prox->texto != texto){
+        // caso não encontre o elemento procurado
+        if ( (*lista)->prox->prox == NULL)
+            return 0;
+        *lista = (*lista)->prox;
+    }
+
+//  removendo um elemento do fim da lista
+    if((*lista)->prox->prox == NULL){
+        free( (*lista)->prox);
+        (*lista)->prox = NULL;
+        return 1;
+    }
+
+// removendo um elemento do meio da lista
+	lixo = (*lista)->prox;
+	(*lista)->prox = (*lista)->prox->prox;
+	free(lixo);
+	return 1;
+
 }
+
